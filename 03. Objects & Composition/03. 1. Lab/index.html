@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FromJSONToHTMLTable</title>
+    <style>
+        table,th{
+            border: groove;
+            border-collapse: collapse;
+        }
+        td{
+            border: 1px solid black;
+        }
+        td,th{
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+    </div>
+    <script>
+        function fromJSONToHTMLTable(input) {
+            input = JSON.parse(input);
+            const htmlTable = ['<table>'];
+
+            // table header
+            const header = Object.keys(input[0]);
+            let curEntry = "   <tr>";
+            for (let elem of header) { curEntry += `<th>${elem}</th>` }
+            curEntry += "</tr>"; htmlTable.push(curEntry);
+
+            // adding entries
+            for (const entry of input) {
+                let curEntry = "   <tr>";
+                for (const elem in entry) {
+                    curEntry += `<td>${entry[elem]}</td>`
+                }
+                curEntry += "</tr>"; htmlTable.push(curEntry);
+            }
+            
+            htmlTable.push('</table>')
+            return htmlTable.join('\n');
+        }
+        window.onload = function(){
+            let container = document.getElementById('wrapper');
+            container.innerHTML = fromJSONToHTMLTable(['[{"Name":"Stamat","Price":5.5},{"Name":"Rumen","Price":6}]']);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+console.log(typeof Number(123).toFixed(0));
